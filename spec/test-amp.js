@@ -49,6 +49,8 @@ describes.selenium('AMP carousel', {
     it('should navigate to the next slide', async () => {
         await controller.click(nextButton);
 
+        await controller.findElement('[title="Next item in carousel (3 of 3)"]');
+
         const img1 = await controller.findElement(':first-child > amp-img');
         expect(await controller.getElementAttribute(img1, 'aria-hidden')).to.equal('true');
 
