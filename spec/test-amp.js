@@ -1,11 +1,11 @@
 import * as describes from '../lib/describes';
 import {install} from '../lib/expect';
 import chai, {expect} from 'chai';
-import {ControllerPromise} from '../lib/controller/functional-test-controller';
+install(chai);
+
 // describes.testcafe('AMP carousel', {
 //     browsers: ['chrome'],
 // }, async env => {
-//     let expect;
 //     let controller;
 //     let nextButton;
 
@@ -24,14 +24,13 @@ import {ControllerPromise} from '../lib/controller/functional-test-controller';
 //         await controller.click(nextButton);
 
 //         const img1 = await controller.findElement(':first-child > amp-img');
-//         expect(await controller.getElementAttribute(img1, 'aria-hidden')).to.equal('true');
+//         debugger;
+//         expect(await controller.getElementAttribute(img1, 'aria-hidden')).to.equal('truex');
 
 //         const img2 = await controller.findElement(':nth-child(2) > amp-img');
 //         expect(await controller.getElementAttribute(img2, 'aria-hidden')).to.equal('false');
 //     });
 // });
-
-install(chai);
 
 describes.selenium('AMP carousel', {
   browsers: ['chrome'],
@@ -54,9 +53,9 @@ describes.selenium('AMP carousel', {
     await controller.click(nextButton);
 
     const img1 = await controller.findElement(':first-child > amp-img');
-    await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.not.equal('true');
+    await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.equal('true');
 
     const img2 = await controller.findElement(':nth-child(2) > amp-img');
-    await expect(controller.getElementAttribute(img2, 'aria-hidden')).to.not.equal('false');
+    await expect(controller.getElementAttribute(img2, 'aria-hidden')).to.equal('false');
   });
 });
