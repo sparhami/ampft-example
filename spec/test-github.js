@@ -6,7 +6,7 @@ const Keys = {
     ENTER: 'enter',
 };
 
-describes.testcafe('GitHub search results', {
+describes.endtoend('GitHub search results', {
     browsers: ['chrome'],
 }, async env => {
     let controller;
@@ -21,14 +21,14 @@ describes.testcafe('GitHub search results', {
         await controller.type(searchButtonHandle, 'TestCafe');
         await controller.type(null, Keys.ENTER);
 
-        await expect(controller.getTitle()).to.contain('TestCafe');
+        await expect(controller.getTitle()).to.match(/TestCafe/);
 
         const itemHandle = await controller.findElement('.repo-list-item');
         await expect(controller.getElementText(itemHandle)).to.contain('DevExpress/testcafe');
     });
 });
 
-describes.testcafe('GitHub login', {
+describes.endtoend('GitHub login', {
     browsers: ['chrome'],
 }, async env => {
     let controller;
@@ -44,5 +44,8 @@ describes.testcafe('GitHub login', {
 
         const errorHandle = await controller.findElement('#js-flash-container > div > div');
         await expect(controller.getElementText(errorHandle)).to.contain('Incorrect username or password.');
+        await expect(controller.getElementText(errorHandle)).contains('Incorrect username or password.');
+        await expect(controller.getElementText(errorHandle)).to.include('Incorrect username or password.');
+        await expect(controller.getElementText(errorHandle)).includes('Incorrect username or password.');
     });
 });

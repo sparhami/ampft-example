@@ -1,7 +1,7 @@
 import * as describes from '../lib/describes';
-import {expect} from 'chai';
+import {expect} from '../lib/expect';
 
-describes.testcafe('First test', {
+describes.endtoend('First test', {
     browsers: ['chrome'],
 }, async env => {
   let controller;
@@ -17,7 +17,7 @@ describes.testcafe('First test', {
 });
 
 
-describes.selenium('First test', {
+describes.endtoend('First test', {
     browsers: ['chrome'],
 }, async env => {
   let controller;

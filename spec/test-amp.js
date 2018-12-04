@@ -2,7 +2,7 @@ import * as describes from '../lib/describes';
 import {expect} from '../lib/expect';
 
 
-describes.selenium('AMP carousel', {
+describes.endtoend('AMP carousel', {
     browsers: ['chrome'],
 }, async env => {
     let controller;
