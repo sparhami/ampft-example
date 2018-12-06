@@ -3,7 +3,6 @@ import {expect} from '../lib/expect';
 
 describes.endtoend('First test', {
     engines: ['puppeteer'],
-    browsers: ['chrome'],
 }, async env => {
   let controller;
 
