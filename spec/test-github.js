@@ -7,7 +7,7 @@ const Keys = {
 };
 
 describes.endtoend('GitHub search results', {
-    browsers: ['chrome'],
+    engines: ['puppeteer'],
 }, async env => {
     let controller;
 
@@ -29,7 +29,7 @@ describes.endtoend('GitHub search results', {
 });
 
 describes.endtoend('GitHub login', {
-    browsers: ['chrome'],
+    engines: ['puppeteer'],
 }, async env => {
     let controller;
 

@@ -3,8 +3,9 @@ import {expect} from '../lib/expect';
 
 
 describes.endtoend('AMP carousel', {
+    engines: ['puppeteer'],
     browsers: ['chrome'],
-}, async env => {
+}, async (env) => {
     let controller;
     let nextButton;
 
