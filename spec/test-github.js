@@ -42,9 +42,8 @@ describes.endtoend('GitHub login', {
     await controller.click(loginButton);
 
     const errorHandle = await controller.findElement('#js-flash-container > div > div');
-    await expect(controller.getElementText(errorHandle)).to.contain('Incorrect username or password.');
-    await expect(controller.getElementText(errorHandle)).contains('Incorrect username or password.');
+    const text = controller.getElementText(errorHandle).then(text => text.trim());
+    await expect(text).to.have.length.above('Incorrect username or password.'.length - 1);
     await expect(controller.getElementText(errorHandle)).to.include('Incorrect username or password.');
-    await expect(controller.getElementText(errorHandle)).includes('Incorrect username or password.');
   });
 });
