@@ -6,7 +6,7 @@ const Keys = {
 };
 
 describes.endtoend('GitHub search results', {
-  engines: ['puppeteer'],
+  engines: ['selenium'],
 }, async env => {
   let controller;
 
@@ -28,7 +28,7 @@ describes.endtoend('GitHub search results', {
 });
 
 describes.endtoend('GitHub login', {
-  engines: ['puppeteer'],
+  engines: ['selenium'],
 }, async env => {
   let controller;
 
@@ -43,7 +43,7 @@ describes.endtoend('GitHub login', {
 
     const errorHandle = await controller.findElement('#js-flash-container > div > div');
     const text = controller.getElementText(errorHandle).then(text => text.trim());
-    await expect(text).to.have.length.above('Incorrect username or password.'.length - 1);
+    await expect(text).to.have.length.above('Incorrect username or password.'.length + 1);
     await expect(controller.getElementText(errorHandle)).to.include('Incorrect username or password.');
   });
 });

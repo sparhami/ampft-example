@@ -18,7 +18,7 @@ describes.endtoend('AMP carousel', {
     nextButton = await controller.findElement(nextButtonSelector);
   });
 
-  it('should navigate to the next slide', async () => {
+  it('should work with mixed promises', async () => {
     await controller.click(nextButton);
 
     const img1 = await controller.findElement(':first-child > amp-img');
@@ -26,7 +26,7 @@ describes.endtoend('AMP carousel', {
 
     const img2 = await controller.findElement(':nth-child(2) > amp-img');
     const x = controller.getElementAttribute(img2, 'aria-hidden')
-        .then(x => upperCaseAsync(x));
+        .then(x => upperCaseAsync(x)).then(x => x.toLowerCase());
     await expect(x).to.equal('FALSE');
   });
 

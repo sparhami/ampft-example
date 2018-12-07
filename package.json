@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "test-amp": "./node_modules/.bin/mocha --require babel-core/register spec/test-amp.js",
+    "test-expect": "./node_modules/.bin/mocha --require babel-core/register spec/test-expect.js",
     "test-hello": "./node_modules/.bin/mocha --require babel-core/register spec/test-hello.js",
     "test-github": "./node_modules/.bin/mocha --require babel-core/register spec/test-github.js"
   },
