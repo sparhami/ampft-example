@@ -8,7 +8,9 @@ To run, try the `package.json` scripts
 yarn
 ./install-drivers.sh
 
-yarn run test-hello
-yarn run test-github
 yarn run test-amp
+yarn run test-expect
+yarn run test-github
+yarn run test-hello
+yarn run test-iframe
 ```

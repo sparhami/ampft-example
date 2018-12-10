@@ -6,8 +6,9 @@
   "scripts": {
     "test-amp": "./node_modules/.bin/mocha --require babel-core/register spec/test-amp.js",
     "test-expect": "./node_modules/.bin/mocha --require babel-core/register spec/test-expect.js",
+    "test-github": "./node_modules/.bin/mocha --require babel-core/register spec/test-github.js",
     "test-hello": "./node_modules/.bin/mocha --require babel-core/register spec/test-hello.js",
-    "test-github": "./node_modules/.bin/mocha --require babel-core/register spec/test-github.js"
+    "test-iframe": "./node_modules/.bin/mocha --require babel-core/register spec/test-iframe.js"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
