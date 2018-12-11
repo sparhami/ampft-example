@@ -12,6 +12,6 @@ describes.endtoend('First test', {
   });
 
   it('should expect hello to not equal world', () => {
-    expect('hello').to.not.equal('world');
+    await expect('hello').to.not.equal('world');
   });
 });
