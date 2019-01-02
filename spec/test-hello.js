@@ -11,7 +11,7 @@ describes.endtoend('First test', {
     await controller.navigateTo('https://www.google.com');
   });
 
-  it('should expect hello to not equal world', () => {
+  it('should expect hello to not equal world', async () => {
     await expect('hello').to.not.equal('world');
   });
 });

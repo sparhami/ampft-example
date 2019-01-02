@@ -9,7 +9,13 @@
     "test-github": "./node_modules/.bin/mocha --require babel-core/register spec/test-github.js",
     "test-hello": "./node_modules/.bin/mocha --require babel-core/register spec/test-hello.js",
     "test-iframe": "./node_modules/.bin/mocha --require babel-core/register spec/test-iframe.js",
-    "test-tutorial": "./node_modules/.bin/mocha --require babel-core/register spec/test-tutorial.js"
+    "test-tutorial": "./node_modules/.bin/mocha --require babel-core/register spec/test-tutorial.js",
+    "debug-test-amp": "./node_modules/.bin/mocha --require babel-core/register spec/test-amp.js --inspect-brk",
+    "debug-test-expect": "./node_modules/.bin/mocha --require babel-core/register spec/test-expect.js --inspect-brk",
+    "debug-test-github": "./node_modules/.bin/mocha --require babel-core/register spec/test-github.js --inspect-brk",
+    "debug-test-hello": "./node_modules/.bin/mocha --require babel-core/register spec/test-hello.js --inspect-brk",
+    "debug-test-iframe": "./node_modules/.bin/mocha --require babel-core/register spec/test-iframe.js --inspect-brk",
+    "debug-test-tutorial": "./node_modules/.bin/mocha --require babel-core/register spec/test-tutorial.js --inspect-brk"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
