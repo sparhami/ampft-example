@@ -43,5 +43,6 @@ describes.endtoend('AMP carousel', {
 
     await expect(controller.getElementProperty(scroller, 'scrollLeft'))
         .to.equal(initialPos + 5);
+    await controller.takeScreenshot('img1.png');
   });
 });
