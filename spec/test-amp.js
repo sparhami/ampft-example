@@ -33,4 +33,15 @@ describes.endtoend('AMP carousel', {
   function upperCaseAsync(str) {
     return new Promise(resolve => resolve(str.toUpperCase()));
   }
+
+  it('should scroll the carousel', async () => {
+    const scroller = await controller.findElement(
+        '.i-amphtml-slides-container');
+    const initialPos = await controller.getElementProperty(
+        scroller, 'scrollLeft');
+    controller.scroll(scroller, {left: initialPos + 5});
+
+    await expect(controller.getElementProperty(scroller, 'scrollLeft'))
+        .to.equal(initialPos + 5);
+  });
 });
