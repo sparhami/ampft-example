@@ -30,10 +30,11 @@ describes.endtoend('AMP carousel', {
 
   it('should reset the window after scroll', async () => {
     const el = await controller.findElement('amp-carousel .scroll-container');
+    // TODO(sparhami) 
     await controller.waitForScrollingToStop(el);
     const [scrollWidth, scrollLeft] = await Promise.all([
-      await controller.getElementScrollWidth(el),
-      await controller.getElementScrollLeft(el),
+      controller.getElementScrollWidth(el),
+      controller.getElementScrollLeft(el),
     ]);
 
     // TODO(sparhami) figure out how wide each slide is, and scroll by at least
@@ -43,8 +44,8 @@ describes.endtoend('AMP carousel', {
       waitTime: SCROLL_STOP_WAIT_TIME,
     });
     const [newScrollWidth, newScrollLeft] = await Promise.all([
-      await controller.getElementScrollWidth(el),
-      await controller.getElementScrollLeft(el),
+      controller.getElementScrollWidth(el),
+      controller.getElementScrollLeft(el),
     ]);
 
     // The new scroll width/left should be the same as before, since the
