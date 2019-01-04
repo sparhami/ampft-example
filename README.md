@@ -14,3 +14,32 @@ yarn run test-github
 yarn run test-hello
 yarn run test-iframe
 ```
+
+## Writing tests
+
+Tests can be written with `mocha` style structure, and using the API methods
+from the `FunctionalTestController` API.
+
+```js
+import * as describes from '../lib/describes';
+import {expect} from '../lib/expect';
+
+describes.endtoend('First test', {
+    engines: ['puppeteer'],
+}, async env => {
+  let controller;
+
+  beforeEach(async () => {
+    controller = env.controller;
+    await controller.navigateTo('https://www.google.com');
+  });
+
+  it('should expect hello to not equal world', async () => {
+    await expect('hello').to.not.equal('world');
+  });
+});
+```
+
+## Debugging tests
+
+Tests can be debugged using the Chrome debugger. Run the test command and pass the `--inspect-brk` flag. Then open Chrome DevTools and click the Node icon. This will allow you to step through the code. The DevTools breakpoints can sometimes not trigger, but `debugger` statements in test code or component code are a dependable way to interrupt control flow.

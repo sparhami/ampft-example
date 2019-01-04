@@ -9,7 +9,7 @@ describes.endtoend('AMP carousel', {
 
   beforeEach(async () => {
     controller = env.controller;
-
+    await controller.setWindowRect({width: 320, height: 640});
     // It is suggested that on HTML side, add proper CSS rules to make things simpler
     // Also, it is suggested that different carousel for testing sit on a different page
     await controller.navigateTo('https://static.ampb.in/c4eNlMzf6mZE1bHZVziK.html');
@@ -33,4 +33,16 @@ describes.endtoend('AMP carousel', {
   function upperCaseAsync(str) {
     return new Promise(resolve => resolve(str.toUpperCase()));
   }
+
+  it('should scroll the carousel', async () => {
+    const scroller = await controller.findElement(
+        '.i-amphtml-slides-container');
+    const initialPos = await controller.getElementProperty(
+        scroller, 'scrollLeft');
+    controller.scroll(scroller, {left: initialPos + 5});
+
+    await expect(controller.getElementProperty(scroller, 'scrollLeft'))
+        .to.equal(initialPos + 5);
+    await controller.takeScreenshot('img1.png');
+  });
 });
