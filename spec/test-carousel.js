@@ -19,7 +19,8 @@ describes.endtoend('AMP carousel', {
 
   async function waitForCarouselImg(n) {
     // We cannot use CSS's nth child due to non-slide elements in the scroll
-    // container.
+    // container. We query all the imgs upfront, since they might not have
+    // laid out yet.
     const el = await controller.findElementXPath(
       `//div[contains(@class, 'slotted')][${n + 1}]//img`);
     return await waitForImgLoad(el);
