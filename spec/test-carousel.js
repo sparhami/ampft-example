@@ -5,7 +5,7 @@ import {expect} from '../lib/expect';
  * How long to wait for the next scroll event before considering the scroll
  * done
  */
-const BROWSER_SCROLL_WAIT_TIME = 200;
+const BROWSER_SCROLL_WAIT_TIME = 100;
 
 /**
  * How long to wait, after scrolling has stopped, for the carousel to reset
@@ -21,6 +21,10 @@ describes.endtoend('AMP carousel', {
 }, async (env) => {
   let controller;
 
+  function prop(el, name) {
+    return controller.getElementProperty(el, name);
+  }
+
   beforeEach(async () => {
     controller = env.controller;
 
@@ -28,29 +32,47 @@ describes.endtoend('AMP carousel', {
       'http://localhost:8000/test/manual/amp-carousel-0-2/basic.amp.html');
   });
 
-  it('should reset the window after scroll', async () => {
+  it('should snap when scrolling', async() => {
     const el = await controller.findElement('amp-carousel .scroll-container');
+    const firstSlide = await controller.findElement('amp-carousel .scroll-container > *');
+
     // TODO(sparhami) 
     await controller.waitForScrollingToStop(el);
-    const [scrollWidth, scrollLeft] = await Promise.all([
-      controller.getElementScrollWidth(el),
-      controller.getElementScrollLeft(el),
-    ]);
+    const scrollLeft = await prop(el, 'scrollLeft');
+    const firstSlideWidth = await prop(firstSlide, 'offsetWidth');
+    const snappedScrollLeft = scrollLeft + firstSlideWidth;
+    const requestedScrollLeft = snappedScrollLeft + 1;
 
-    // TODO(sparhami) figure out how wide each slide is, and scroll by at least
-    // 1 slide's width  + 1px.
-    await controller.scrollElementLeftBy(el, 1000);
+    await controller.scroll(el, {left: requestedScrollLeft});
+    await controller.waitForScrollingToStop(el, {
+      waitTime: BROWSER_SCROLL_WAIT_TIME,
+    });
+
+    // We should have snapped to the edge of the slide rather than the
+    // requested scroll position.
+    await expect(prop(el, 'scrollLeft')).to.equal(snappedScrollLeft);
+  });
+
+  it('should reset the window after scroll', async() => {
+    const el = await controller.findElement('amp-carousel .scroll-container');
+    const firstSlide = await controller.findElement('amp-carousel .scroll-container > *');
+    
+    // TODO(sparhami) 
+    await controller.waitForScrollingToStop(el);
+    const scrollWidth = await prop(el, 'scrollWidth');
+    const scrollLeft = await prop(el, 'scrollLeft');
+    const firstSlideWidth = await prop(firstSlide, 'offsetWidth');
+    const snappedScrollLeft = scrollLeft + firstSlideWidth;
+    const requestedScrollLeft = snappedScrollLeft + 1;
+
+    await controller.scroll(el, {left: requestedScrollLeft});
     await controller.waitForScrollingToStop(el, {
       waitTime: SCROLL_STOP_WAIT_TIME,
     });
-    const [newScrollWidth, newScrollLeft] = await Promise.all([
-      controller.getElementScrollWidth(el),
-      controller.getElementScrollLeft(el),
-    ]);
 
     // The new scroll width/left should be the same as before, since the
     // windowing should have been reset around the new element.
-    await expect(newScrollWidth).to.equal(scrollWidth);
-    await expect(newScrollLeft).to.equal(scrollLeft);
+    await expect(prop(el, 'scrollWidth')).to.equal(scrollWidth);
+    await expect(prop(el, 'scrollLeft')).to.equal(scrollLeft);
   });
 });
