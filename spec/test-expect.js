@@ -92,11 +92,31 @@ describes.endtoend('AMP carousel', {
     const length = controller.getElementAttribute(img1, 'aria-hidden').then(value => value.length);
     await expect(length).to.equal(4);
     await expect(length).to.equal(4);
+  });
 
+  it('should work with Promise chains that sync mutate', async () => {
     const img2 = await controller.findElement(':nth-child(2) > amp-img');
-    const x = controller.getElementAttribute(img2, 'aria-hidden')
-        .then(x => upperCaseAsync(x)).then(x => x.toLowerCase());
-    await expect(x).to.equal('false');
+    const result = controller.getElementAttribute(img2, 'aria-hidden')
+        .then(str => str.toLowerCase() + '0');
+    await expect(result).to.equal('true0');
+  });
+
+  it('should work with Promise chains that async mutate', async () => {
+    const img2 = await controller.findElement(':nth-child(2) > amp-img');
+    const result = controller.getElementAttribute(img2, 'aria-hidden')
+        .then(str => upperCaseAsync(str));
+    await expect(result).to.equal('TRUE');
+  });
+
+  it('should work with Promise chains that async and sync mutate', async () => {
+    const img2 = await controller.findElement(':nth-child(2) > amp-img');
+    const result = controller.getElementAttribute(img2, 'aria-hidden')
+        .then(str => str.toLowerCase() + '0')
+        .then(str => upperCaseAsync(str));
+
+    result.then(str => console.log(str));
+
+    await expect(result).to.equal('TRUE0');
   });
 
   function upperCaseAsync(str) {

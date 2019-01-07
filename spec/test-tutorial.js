@@ -77,7 +77,7 @@ describes.endtoend('Tutorial test', {
     const img1 = await controller.findElement(':first-child > amp-img');
     /**
      * 5g. This commented-out expectation will fail if uncommented,
-     *     because the attribute value will equal `false` because it does not
+     *     because the attribute value might equal `false` because it does not
      *     change immediately after the driver clicks the element.
      */
     // expect(await controller.getElementAttribute(img1, 'aria-hidden')).to.equal('true');
