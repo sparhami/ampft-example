@@ -19,6 +19,7 @@ describes.endtoend('AMP carousel', {
     await expect(2+2).to.be.above(3);
     await expect(2+2).to.be.below(5);
 
+    await expect({a: '2', b: '3'}).to.include({a: '2'});
     await expect('hello world').to.include('o w');
     await expect('hello world').includes('o w');
     await expect('hello world').to.contain('o w');
@@ -37,6 +38,7 @@ describes.endtoend('AMP carousel', {
     await expect(2+2).to.not.be.above(5);
     await expect(2+2).to.not.be.below(3);
 
+    await expect({a: '2', b: '3'}).to.not.include({a: '7'});
     await expect('hello world').to.not.include('foo bar');
     await expect('hello world').not.includes('foo bar');
     await expect('hello world').to.not.contain('foo bar');
