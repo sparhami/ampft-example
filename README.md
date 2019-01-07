@@ -15,6 +15,18 @@ yarn run test-hello
 yarn run test-iframe
 ```
 
+You can also run tests using:
+
+```
+yarn run test spec/test-amp.js
+```
+
+To run a specific test case, you can use Mocha's grep functionality to find test cases matching a regex. For example:
+
+```
+yarn run test spec/test-amp.js -g "scroll"
+```
+
 ## Writing tests
 
 Tests can be written with `mocha` style structure, and using the API methods
