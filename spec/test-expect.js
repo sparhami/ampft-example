@@ -19,6 +19,7 @@ describes.endtoend('AMP carousel', {
     await expect(2+2).to.be.above(3);
     await expect(2+2).to.be.below(5);
 
+    await expect({a: '2', b: '3'}).to.include({a: '2'});
     await expect('hello world').to.include('o w');
     await expect('hello world').includes('o w');
     await expect('hello world').to.contain('o w');
@@ -37,6 +38,7 @@ describes.endtoend('AMP carousel', {
     await expect(2+2).to.not.be.above(5);
     await expect(2+2).to.not.be.below(3);
 
+    await expect({a: '2', b: '3'}).to.not.include({a: '7'});
     await expect('hello world').to.not.include('foo bar');
     await expect('hello world').not.includes('foo bar');
     await expect('hello world').to.not.contain('foo bar');
@@ -65,11 +67,15 @@ describes.endtoend('AMP carousel', {
     await expect(length).to.equal(4);
     await expect(length).to.be.above(3);
     await expect(length).to.be.below(5);
-
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.include('t');
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.contain('t');
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).includes('t');
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).contains('t');
+
+    const testObj = controller.getElementAttribute(img1, 'aria-hidden').then(value => {
+      return {ariaHidden: value};
+    });
+    await expect(testObj).to.include({ariaHidden: 'true'});
 
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.match(/t/);
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).matches(/t/);
@@ -89,14 +95,39 @@ describes.endtoend('AMP carousel', {
 
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.not.equal('false');
 
+    const testObj = controller.getElementAttribute(img1, 'aria-hidden').then(value => {
+      return {ariaHidden: value};
+    });
+    await expect(testObj).to.not.include({ariaHidden: 'false'});
+
     const length = controller.getElementAttribute(img1, 'aria-hidden').then(value => value.length);
     await expect(length).to.equal(4);
     await expect(length).to.equal(4);
+  });
 
+  it('should work with Promise chains that sync mutate', async () => {
     const img2 = await controller.findElement(':nth-child(2) > amp-img');
-    const x = controller.getElementAttribute(img2, 'aria-hidden')
-        .then(x => upperCaseAsync(x)).then(x => x.toLowerCase());
-    await expect(x).to.equal('false');
+    const result = controller.getElementAttribute(img2, 'aria-hidden')
+        .then(str => str.toLowerCase() + '0');
+    await expect(result).to.equal('true0');
+  });
+
+  it('should work with Promise chains that async mutate', async () => {
+    const img2 = await controller.findElement(':nth-child(2) > amp-img');
+    const result = controller.getElementAttribute(img2, 'aria-hidden')
+        .then(str => upperCaseAsync(str));
+    await expect(result).to.equal('TRUE');
+  });
+
+  it('should work with Promise chains that async and sync mutate', async () => {
+    const img2 = await controller.findElement(':nth-child(2) > amp-img');
+    const result = controller.getElementAttribute(img2, 'aria-hidden')
+        .then(str => str.toLowerCase() + '0')
+        .then(str => upperCaseAsync(str));
+
+    result.then(str => console.log(str));
+
+    await expect(result).to.equal('TRUE0');
   });
 
   function upperCaseAsync(str) {
