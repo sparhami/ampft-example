@@ -67,11 +67,15 @@ describes.endtoend('AMP carousel', {
     await expect(length).to.equal(4);
     await expect(length).to.be.above(3);
     await expect(length).to.be.below(5);
-
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.include('t');
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.contain('t');
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).includes('t');
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).contains('t');
+
+    const testObj = controller.getElementAttribute(img1, 'aria-hidden').then(value => {
+      return {ariaHidden: value};
+    });
+    await expect(testObj).to.include({ariaHidden: 'true'});
 
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.match(/t/);
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).matches(/t/);
@@ -90,6 +94,11 @@ describes.endtoend('AMP carousel', {
     const img1 = await controller.findElement(':first-child > amp-img');
 
     await expect(controller.getElementAttribute(img1, 'aria-hidden')).to.not.equal('false');
+
+    const testObj = controller.getElementAttribute(img1, 'aria-hidden').then(value => {
+      return {ariaHidden: value};
+    });
+    await expect(testObj).to.not.include({ariaHidden: 'false'});
 
     const length = controller.getElementAttribute(img1, 'aria-hidden').then(value => value.length);
     await expect(length).to.equal(4);
