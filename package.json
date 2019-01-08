@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "test": "./node_modules/.bin/mocha --require babel-core/register",
     "test-amp": "./node_modules/.bin/mocha --require babel-core/register spec/test-amp.js",
     "test-expect": "./node_modules/.bin/mocha --require babel-core/register spec/test-expect.js",
     "test-github": "./node_modules/.bin/mocha --require babel-core/register spec/test-github.js",

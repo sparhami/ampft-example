@@ -1,0 +1,31 @@
+<body>
+  <amp-carousel>
+    <div></div>
+    <div>
+      <amp-img></amp-img>
+    </div>
+    <div>
+      <amp-img></amp-img>
+    </div>
+    <div>
+      <amp-img></amp-img>
+    </div>
+    <div>
+      <amp-img></amp-img>
+    </div>
+    <div>
+      <amp-img></amp-img>
+    </div>
+    <div></div>
+  </amp-carousel>
+
+  <script>
+    const allImgs = document.querySelectorAll('amp-img');
+    let i = 0;
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        allImgs[i].className = 'i-amphtml-layout';
+      }, 200 * i);
+    }
+  </script>
+</body>
